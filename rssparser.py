@@ -14,6 +14,13 @@ class RssParser:
         print self.get_tag(article, 'description')
         self.cursor += 1
 
+    def get_next_article(self):
+        article = self.article_list[self.cursor]
+        self.cursor += 1
+        return self.get_tag(article, 'title'), \
+            self.get_tag(article, 'link'), \
+            self.get_tag(article, 'description')
+
     def EOF(self):
         return self.cursor >= len(self.article_list)
 

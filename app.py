@@ -1,11 +1,18 @@
 from rssparser import RssParser
 from rssreader import RssReader
+import sys
 
 reader = RssReader()
-#feed = reader.read_file('example.xml')
-feed = reader.read_url('http://rss.cnn.com/rss/cnn_tech.rss')
-parser = RssParser(feed)
+article_list = []
+feed_list = open('feedlist', 'r')
 
-while parser.EOF() == False:
-    parser.print_next()
-    print '' # Print empty space.
+for feed in feed_list:
+    if feed:
+        feed_result = reader.read_url(feed)
+        parser = RssParser(feed_result)
+
+        while parser.EOF() == False:
+            article_list.append(parser.get_next_article())
+
+for article in article_list:
+    print article
